@@ -121,14 +121,9 @@ jobs:
       VM_HOST: 192.168.56.101
     steps:
       - name: Checkout
-        run: |
-          set -euo pipefail
-          git init -q .
-          git remote remove origin 2>/dev/null || true
-          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
-          git fetch -q --depth 1 origin "${GITHUB_SHA}"
-          git checkout -q -f FETCH_HEAD
-          git clean -ffdx
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Deploy with Ansible
         working-directory: ansible
         run: ansible-playbook site.yml -e "app_tag=${GITHUB_SHA}"
