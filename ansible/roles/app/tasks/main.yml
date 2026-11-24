@@ -11,6 +11,7 @@
     tag: "{{ app_tag }}"
     source: pull
     state: present
+    timeout: 300
 
 - name: Run application container
   community.docker.docker_container:
